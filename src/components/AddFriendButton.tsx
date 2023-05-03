@@ -8,11 +8,13 @@ import axios, { AxiosError } from 'axios'
 import {z} from 'zod'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 
 interface AddFriendButtonProps {}
 
 const AddFriendButton: FC<AddFriendButtonProps> = () => {
 
+    const router = useRouter()
     type FormData = z.infer<typeof addFriendValidator>
 
     const [showSuccessState, setShowSuccessState] = useState<boolean>(false)
@@ -27,6 +29,9 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
 
             await axios.post('/api/friends/add', {email: validatedEmail})
             setShowSuccessState(true)
+            setTimeout(() => {
+                router.push('/dahsboard')
+            }, 2000)
         } catch (error) {
             if (error instanceof z.ZodError) {
                 setError('email', {message: error.message})
