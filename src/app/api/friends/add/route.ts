@@ -12,7 +12,9 @@ export async function POST (req: Request) {
         const {email: emailToAdd} = addFriendValidator.parse(body.email)
 
         const isToAdd = (await fetchRedis("get", `user:email:${emailToAdd}`)) as string
+        console.log(isToAdd)
         const session = await getServerSession(authOptions)
+        console.log(session)
         
         if (!session) {
             return new Response("Unauthorized", {status: 401})

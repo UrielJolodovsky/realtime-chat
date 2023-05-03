@@ -3,12 +3,13 @@
 import {FC, useState} from 'react'
 import Button from './ui/Button'
 import { addFriendValidator } from '@/lib/validations/add-friend'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import axios, { AxiosError } from 'axios'
 import {z} from 'zod'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
+import { Toast } from 'react-hot-toast'
 
 interface AddFriendButtonProps {}
 
@@ -18,6 +19,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
     type FormData = z.infer<typeof addFriendValidator>
 
     const [showSuccessState, setShowSuccessState] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>("")
 
     const { register, handleSubmit, setError, formState: {errors}} = useForm<FormData>({
         resolver: zodResolver(addFriendValidator)
@@ -27,12 +29,12 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
         try {
             const validatedEmail = addFriendValidator.parse({email})
 
-            await axios.post('/api/friends/add', {email: validatedEmail})
+            const result = await axios.post('/api/friends/add', {email: validatedEmail})
+            console.log(result)
             setShowSuccessState(true)
-            setTimeout(() => {
-                router.push('/dahsboard')
-            }, 2000)
+            router.push('/dahsboard')
         } catch (error) {
+            console.log(error)
             if (error instanceof z.ZodError) {
                 setError('email', {message: error.message})
         }
@@ -58,7 +60,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
             placeholder='you@example.com'/>
             <Button>Add</Button>
         </div>
-        <p className='mt-1 text-sm text-red-600'>{errors.email?.message}</p>
+        <p className='mt-1 text-sm text-red-600'>{toast.error(`${errors.email?.message}`)}</p>
         {showSuccessState ? (
             <p className='mt-1 text-sm text-green-600'>Friend request sent</p>
         ) : null}
