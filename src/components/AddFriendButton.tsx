@@ -45,12 +45,12 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
     }
 }
 
-    const onSubmit = (data: FormData) => {
+    const emailcargado = (data: FormData) => {
         addFriend(data.email)
     }
 
     return (
-    <form onSubmit={handleSubmit(onSubmit)} className='max-w-sm'>
+    <form onSubmit={handleSubmit(emailcargado)} className='max-w-sm'>
         <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
             Add friend by E-mail
         </label>
