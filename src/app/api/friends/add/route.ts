@@ -5,7 +5,7 @@ import { addFriendValidator } from "@/lib/validations/add-friend"
 import { getServerSession } from "next-auth"
 import {z} from "zod"
 
-export async function POST (req: Request) {
+export async function POST (req: Request) { 
     try {
         const body = await req.json()
 

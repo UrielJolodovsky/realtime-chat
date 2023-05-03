@@ -29,8 +29,9 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
         try {
             const validatedEmail = addFriendValidator.parse({email})
 
-            const result = await axios.post('/api/friends/add', {email: validatedEmail})
-            console.log(result)
+            await axios.post('/api/friends/add', {email: validatedEmail})
+                //.then((res) => console.log(res.data))
+                //.catch((err) => console.log(err))
             setShowSuccessState(true)
             router.push('/dahsboard')
         } catch (error) {
