@@ -8,16 +8,14 @@ import axios, { AxiosError } from 'axios'
 import {z} from 'zod'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
-import { useRouter } from 'next/router'
-import { Toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 interface AddFriendButtonProps {}
 
 const AddFriendButton: FC<AddFriendButtonProps> = () => {
 
-    const router = useRouter()
     type FormData = z.infer<typeof addFriendValidator>
-
+    const router = useRouter()
     const [showSuccessState, setShowSuccessState] = useState<boolean>(false)
     const [email, setEmail] = useState<string>("")
 
@@ -61,10 +59,10 @@ const AddFriendButton: FC<AddFriendButtonProps> = () => {
             placeholder='you@example.com'/>
             <Button>Add</Button>
         </div>
-        <p className='mt-1 text-sm text-red-600'>{toast.error(`${errors.email?.message}`)}</p>
+        
         {showSuccessState ? (
             <p className='mt-1 text-sm text-green-600'>Friend request sent</p>
-        ) : null}
+        ) : toast.error(`${errors.email?.message}`)}
     </form>
   )
 }

@@ -35,5 +35,8 @@
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "next-router-mock": "^0.9.3"
   }
 }

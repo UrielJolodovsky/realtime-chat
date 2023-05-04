@@ -5,7 +5,8 @@ import { Inter } from 'next/font/google'
 import { db } from '@/lib/db'
 import Button from '@/components/ui/Button'
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import NextLink from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,8 @@ export default async function Home() {
       <Button variant="default">Hello</Button>
       <button onClick={() => signOut()}>LogOut</button>
       <button onClick={() => router.push('/dashboard')}>Dashboard</button>
+
+      
     </>
   )
 }
